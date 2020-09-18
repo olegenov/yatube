@@ -7,18 +7,17 @@
   <form enctype="multipart/form-data" method="post">
       {% csrf_token %}
       <h3 class="card-header">Загрузить фото профиля</h3>
-      <div class="card-body">
-      <form>
+        <div class="card-body">
             <div class="h6">
               <div class="form-group">
-                <h5>Тема: <br></h5>
+                <h5>Фото: <br></h5>
                 {{ form.photo }}
               </div>
             </div>
           <button type="submit" class="btn btn-primary">
-            Загрузить</button>
-          </li>
-      </form>
+            Загрузить
+          </button>
+        </div>
   </form>
 </div>
 {% endblock %}

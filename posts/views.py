@@ -276,15 +276,23 @@ def edit_photo(request, username):
     if request.user != profile:
         return redirect('profile', username=profile)
 
-    form = ProfilePhotoForm(request.POST or None, files=request.FILES or None, instance=profile.profile_photo)
+    form = ProfilePhotoForm(request.POST or None, files=request.FILES or None)
 
     if not form.is_valid():
         return render(
             request,
-            'posts/new_post.html',
+            'profile_photo.html',
             {'form': form, 'profile': profile}
         )
 
-    form.save()
+    try:
+        photo = ProfilePhoto.objects.get(user=profile)
+        photo.delete()
+    except:
+        photo = None
+
+    photo = form.save(commit=False)
+    photo.user = request.user
+    photo.save()
 
     return redirect('profile', username=profile)
