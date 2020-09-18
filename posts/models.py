@@ -74,10 +74,12 @@ class ProfilePhoto(models.Model):
     photo = models.ImageField(
         upload_to='users/',
         blank=True, null=True,
-        verbose_name='Аватар'
+        verbose_name='Аватар',
     )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='profile_photo'
     )
+    class Meta:
+        unique_together = ['user', 'photo']

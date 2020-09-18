@@ -66,7 +66,11 @@ def new_post(request):
 
 def profile(request, username):
     profile = get_object_or_404(User, username=username)
-    photo = get_object_or_404(ProfilePhoto, user=profile)
+    with open('media/profile.jpg','rb') as img:
+        try:
+            photo = ProfilePhoto.objects.get(user=profile).photo
+        except:
+            photo = img
     post_list = profile.posts.order_by('-pub_date')
     post_amount = post_list.count()
     paginator = Paginator(post_list, 10)
@@ -101,7 +105,11 @@ def profile(request, username):
 
 def post_view(request, username, post_id):
     profile = get_object_or_404(User, username=username)
-    photo = get_object_or_404(ProfilePhoto, user=profile)
+    with open('media/profile.jpg','rb') as img:
+        try:
+            photo = ProfilePhoto.objects.get(user=profile).photo
+        except:
+            photo = img
     post = get_object_or_404(Post, pk=post_id, author=profile)
     post_amount = profile.posts.count()
     form = CommentForm()

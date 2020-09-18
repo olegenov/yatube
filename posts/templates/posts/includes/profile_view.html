@@ -1,5 +1,5 @@
 {% load thumbnail %}
-{% thumbnail photo.photo "960x960" crop="center" upscale=True as im %}
+{% thumbnail photo "960x960" crop="center" upscale=True as im %}
     <img class="card-img" src="{{ im.url }}" />
 {% endthumbnail %}
 <ul class="list-group list-group-flush">
