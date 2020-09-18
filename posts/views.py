@@ -68,9 +68,9 @@ def new_post(request):
 def profile(request, username):
     profile = get_object_or_404(User, username=username)
     
-    try:
+    if ProfilePhoto.objects.filter(user=profile).exists():
         photo = ProfilePhoto.objects.get(user=profile).photo
-    except:
+    else:
         photo = None
     
     post_list = profile.posts.order_by('-pub_date')
@@ -108,9 +108,9 @@ def profile(request, username):
 def post_view(request, username, post_id):
     profile = get_object_or_404(User, username=username)
 
-    try:
+    if ProfilePhoto.objects.filter(user=profile).exists():
         photo = ProfilePhoto.objects.get(user=profile).photo
-    except:
+    else:
         photo = None
 
     post = get_object_or_404(Post, pk=post_id, author=profile)
@@ -272,11 +272,12 @@ def profile_unfollow(request, username):
 @login_required
 def edit_photo(request, username):
     profile = get_object_or_404(User, username=username)
+    photo = get_object_or_404(ProfilePhoto, user=profile)
 
     if request.user != profile:
         return redirect('profile', username=profile)
 
-    form = ProfilePhotoForm(request.POST or None, files=request.FILES or None)
+    form = ProfilePhotoForm(request.POST or None, files=request.FILES or None, instance=photo)
 
     if not form.is_valid():
         return render(
