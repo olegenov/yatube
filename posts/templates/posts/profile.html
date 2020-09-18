@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Профиль пользователя {{ profile.username }}{% endblock %}
+{% block content %}
+<main role="main" class="container">
+        <div class="row">
+                <div class="col-md-3 mb-3 mt-1">
+                        <div class="card">
+                                {% include "posts/includes/profile_view.html" %}
+                                        {% if user.is_authenticated %}
+                                                {% if request.user == profile %}
+                                                <li class="list-group-item">
+                                                        <a class="btn btn-lg btn-light" href="{% url 'edit_photo' profile.username %}" role="button"> 
+                                                                <div class="h6 text-muted">Изменить фото профиля</div> 
+                                                        </a> 
+                                                </li>
+                                                {% endif %}
+                                                {% if request.user != profile %}
+                                                <li class="list-group-item">
+                                                        {% if following %}
+                                                        <a class="btn btn-lg btn-light" href="{% url 'profile_unfollow' profile.username %}" role="button"> 
+                                                                Отписаться 
+                                                        </a> 
+                                                        {% else %}
+                                                        <a class="btn btn-lg btn-primary" href="{% url 'profile_follow' profile.username %}" role="button">
+                                                                Подписаться 
+                                                        </a>
+                                                        {% endif %}
+                                                </li>      
+                                                {% endif %}
+                                        {% else %}
+                                                <li class="list-group-item">
+                                                        <a class="btn btn-lg btn-light" href="{% url 'profile_unfollow' profile.username %}" role="button"> 
+                                                                <div class="h6 text-muted">Чтобы подписаться, войдите</div> 
+                                                        </a> 
+                                                </li>
+                                        {% endif %}
+                                </ul>
+                        </div>
+                </div>
+                <div class="col-md-9">
+                        {% for post in page %}
+                                {% include "posts/includes/post_item.html" with post=post %}
+                        {% if not forloop.last %}<hr>{% endif %}
+                        {% endfor %}
+                        {% if page.has_other_pages %}
+                                {% include "paginator.html" with items=page paginator=paginator %}
+                        {% endif %}
+                </div>
+        </div>
+</main>
+{% endblock %}

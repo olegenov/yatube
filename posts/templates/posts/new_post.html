@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}
+{% if exists %}
+Редактировать запись
+{% else %}
+Новая запись
+{% endif %}
+{% endblock %}
+{% block content %}
+<div class="card my-4">
+  <form
+      enctype="multipart/form-data"
+      method="post">
+      {% csrf_token %}
+      <h3 class="card-header">{% if exists %}
+        Редактировать запись
+        {% else %}
+        Новая запись
+        {% endif %}</h3>
+      <div class="card-body">
+      <form>
+            <div class="h6">
+              <div class="form-group">
+                <h5>Текст: <br></h5>
+                {{ form.text }}
+              </div>
+            </div>
+            <div class="h6">
+              <div class="form-group">
+                <h5>Cообщество: {{ form.group }}</h5>
+              </div>
+            </div>
+            <div class="h6">
+              <div class="form-group">
+                <h6>{{ form.image }}</h6>
+              </div>
+            </div>
+          <button type="submit" class="btn btn-primary">{% if exists %}
+            Редактировать
+            {% else %}
+            Создать
+            {% endif %}</button>
+          </li>
+      </form>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}
+Связаться с нами
+{% endblock %}
+{% block content %}
+<div class="card my-4">
+  <form enctype="multipart/form-data" method="post">
+      {% csrf_token %}
+      <h3 class="card-header">Связаться с нами</h3>
+      <div class="card-body">
+      <form>
+            <div class="h6">
+              <div class="form-group">
+                <h5>Тема: <br></h5>
+                {{ form.subject }}
+              </div>
+            </div>
+            <div class="h6">
+              <div class="form-group">
+                <h5>Опишите проблему: <br></h5>
+                {{ form.message }}
+              </div>
+            </div>
+            <div class="h6">
+              <div class="form-group">
+                <h5>Я: {{ form.sender }}</h5>
+              </div>
+            </div>
+            <div class="h6">
+                <div class="form-group">
+                  <h5>Связаться со мной: &nbsp; {{ form.cc_myself }}</h5>
+                </div>
+              </div>
+          <button type="submit" class="btn btn-primary">
+            Отправить</button>
+          </li>
+      </form>
+  </form>
+</div>
+{% endblock %}

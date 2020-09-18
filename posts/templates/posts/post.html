@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Профиль пользователя {{ profile.username }}{% endblock %}
+{% block content %}
+<main role="main" class="container">
+        <div class="row">
+                <div class="col-md-3 mb-3 mt-1">
+                        <div class="card">
+                                <ul class="list-group list-group-flush">
+                                        {% include "posts/includes/profile_view.html" %}
+                                </ul>
+                        </div>
+                </div>
+                <div class="col-md-9">
+                        <div class="card mb-3 mt-1 shadow-sm">
+                                {% load thumbnail %}
+                                {% thumbnail post.image "960x339" crop="center" upscale=True as im %}
+                                <img class="card-img" src="{{ im.url }}">
+                                {% endthumbnail %}
+                                <div class="card-body">
+                                        <p class="card-text">
+                                        <h5><a href="{% url 'profile' profile.username %}">{{ profile.username }}</a></h5>
+                                        {{ post.text }}
+                                        </p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                                {% if user.username == profile.username %}
+                                                <div class="btn-group ">
+                                                        <a class="btn btn-sm text-muted" href="{% url 'post_edit' profile.username post.pk %}"' role="button">
+                                                                Редактировать
+                                                        </a>
+                                                        <a class="btn btn-sm text-muted" href="{% url 'post_delete' post.author.username post.id %}" role="button">
+                                                                Удалить
+                                                        </a>
+                                                </div>
+                                                {% endif %}
+                                                <small class="text-muted pull-right">{{ post.pub_date | date:"d M Y" }}</small>
+                                        </div>
+                                        {% include 'posts/includes/comments.html' %}
+                                </div>
+                        </div>
+                </div>
+        </div>
+</main>
+{% endblock %}

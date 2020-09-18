@@ -1,0 +1,22 @@
+{% load thumbnail %}
+{% thumbnail photo.photo "960x960" crop="center" upscale=True as im %}
+    <img class="card-img" src="{{ im.url }}" />
+{% endthumbnail %}
+<ul class="list-group list-group-flush">
+<li class="list-group-item">
+    <h3>{{ profile.first_name }} {{ profile.last_name }}</h3>
+</li>
+<li class="list-group-item">
+    <h4><div class="h6 text-muted"><a href="{% url 'profile' profile.username %}"><div class="h6 text-muted">@{{ profile.username }}</div></a></div></h4>
+</li>
+<li class="list-group-item">
+    <div class="h6 text-muted">
+            Подписчиков: {{ followers }} <br/>
+            Подписан: {{ follows }}
+    </div>
+</li>
+<li class="list-group-item">
+    <div class="h6 text-muted">
+            Записей: {{ amount }}
+    </div>
+</li>

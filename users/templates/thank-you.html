@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Спасибо!{% endblock %}
+{% block content %}
+<main role="main" class="container">
+        <h3>Спасибо за обратную связь! Вскоре мы прочитаем Ваше сообщение.</h3>
+        <br>
+        <h4>
+        <a class="text-muted" href="{% url 'index' %}" role="button">
+            Вернуться на главную страницу
+        </a>
+        </h4>
+</main>
+{% endblock %}
