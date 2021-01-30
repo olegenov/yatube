@@ -24,5 +24,5 @@ urlpatterns = [
     path('404/', views.page_not_found),
     path('500/', views.server_error),
     path('<str:username>/<int:post_id>/comment/', views.add_comment, name='add_comment'),
-    path("photo/<str:username>", views.edit_photo, name="edit_photo")
+    path('photo/<str:username>', views.edit_photo, name='edit_photo')
 ]

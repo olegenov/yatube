@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -71,7 +73,7 @@ def profile(request, username):
     if ProfilePhoto.objects.filter(user=profile).exists():
         photo = ProfilePhoto.objects.get(user=profile).photo
     else:
-        photo = None
+        photo = os.path.abspath('media/profile.jpg')
     
     post_list = profile.posts.order_by('-pub_date')
     post_amount = post_list.count()
@@ -111,7 +113,7 @@ def post_view(request, username, post_id):
     if ProfilePhoto.objects.filter(user=profile).exists():
         photo = ProfilePhoto.objects.get(user=profile).photo
     else:
-        photo = None
+        photo = os.path('media/profile.jpg')
 
     post = get_object_or_404(Post, pk=post_id, author=profile)
     post_amount = profile.posts.count()
@@ -272,7 +274,11 @@ def profile_unfollow(request, username):
 @login_required
 def edit_photo(request, username):
     profile = get_object_or_404(User, username=username)
-    photo = get_object_or_404(ProfilePhoto, user=profile)
+
+    if ProfilePhoto.objects.filter(user=profile).exists():
+        photo = ProfilePhoto.objects.get(user=profile).photo
+    else:
+        photo = None 
 
     if request.user != profile:
         return redirect('profile', username=profile)
