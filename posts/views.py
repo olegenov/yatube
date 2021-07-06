@@ -113,7 +113,7 @@ def post_view(request, username, post_id):
     if ProfilePhoto.objects.filter(user=profile).exists():
         photo = ProfilePhoto.objects.get(user=profile).photo
     else:
-        photo = os.path('media/profile.jpg')
+        photo = os.path.abspath('media/profile.jpg')
 
     post = get_object_or_404(Post, pk=post_id, author=profile)
     post_amount = profile.posts.count()
