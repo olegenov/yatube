@@ -2,7 +2,7 @@
 yatube
 ![CI](https://github.com/olegenov/yatube/workflows/CI/badge.svg?branch=master&event=push)
 
-# **FOODGRAM**
+# **YATUBE**
 ### Social networking site gor bloggers.
 
 #### Deploy locally:
